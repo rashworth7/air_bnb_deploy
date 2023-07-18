@@ -4,7 +4,7 @@ class TenantRepository():
     def __init__(self, connection):
         self._connection = connection
     
-    def list_tenants_usernames(self):
+    def list_tenants(self):
         rows = self._connection.execute('SELECT * from tenants')
         tenants = []
         for row in rows:
