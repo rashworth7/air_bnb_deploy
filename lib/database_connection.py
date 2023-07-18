@@ -17,7 +17,7 @@ class DatabaseConnection:
         self.test_mode = test_mode
 
     # This method connects to PostgreSQL using the psycopg library. We connect
-    # to localhost and select the database name given in argument.
+    # to localhost and select the database name given in argument. 
     def connect(self):
         try:
             self.connection = psycopg.connect(
