@@ -5,7 +5,7 @@ from lib.tenant import Tenant
 def test_list_all_tenants_usernames(db_connection):
     db_connection.seed('seeds/airbnb_seeds.sql')
     repository = TenantRepository(db_connection)
-    all_tenants = repository.list_tenants_usernames()
+    all_tenants = repository.list_tenants()
     assert all_tenants == [
         Tenant(1, 'Charlotte'),
         Tenant(2, 'Oli'),
