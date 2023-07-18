@@ -12,8 +12,8 @@ def test_all_method(db_connection):
 
     assert spaces == [
         Space(1, 'Space 1', 'Space 1 is very nice', 50, 1),
-        Space(2,'Space 2', 'Space 2 is cool', 60, 1),
-        Space(3,'Space 3', 'Space 3 rubbish', 20, 2)
+        Space(2, 'Space 2', 'Space 2 is cool', 60, 1),
+        Space(3, 'Space 3', 'Space 3 rubbish', 20, 2)
     ]
 
 """
