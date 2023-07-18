@@ -12,3 +12,10 @@ def test_list_all_tenants_usernames(db_connection):
         Tenant(3, 'Nebiat'),
         Tenant(4, 'Rich')
     ]
+
+# testing a search by tenant id
+def test_get_tenant_by_id(db_connection):
+    db_connection.seed('seeds/airbnb_seeds.sql')
+    repository = TenantRepository(db_connection)
+    single_tenant = repository.get_tenant_by_id(2)
+    assert single_tenant == Tenant(2, 'Oli')
