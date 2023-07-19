@@ -46,7 +46,7 @@ def test_get_single_space_by_id(db_connection):
     assert space == Space(1, 'Space 1', 'Space 1 is very nice', 50, 1)
 
 """
-when we call get_space_by_landlord_id we get a single space object reflecting the seed data
+when we call get_space_by_landlord_id we get a list of space objects reflecting the seed data
 """
 
 def test_get_spaces_by_landlord_id(db_connection):
