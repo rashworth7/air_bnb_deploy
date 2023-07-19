@@ -26,3 +26,25 @@ def test_get_landlord_login(db_connection, page, test_web_address):
         'Landlord Username: Nebiat', 
         'Landlord Username: Rich'
     ])
+
+"""
+test Get /landlord_dashboard/id
+"""
+# def test_get_landlord_dashboard_by_id(db_connection, page, test_web_address):
+#     db_connection.seed("./seeds/airbnb_seeds.sql")
+#     page.goto(f"http://{test_web_address}/landlord_login")
+#     page.click("text=Landlord Username: Charlotte")
+
+#     h1_element = page.locator("h1")
+#     expect(h1_element).to_have_text("Welcome Charlotte")
+
+"""
+test GET /tenant_dashboard/id
+"""
+# def test_get_tenant_dashboard_by_id(db_connection, page, test_web_address):
+#     db_connection.seed("./seeds/airbnb_seeds.sql")
+#     page.goto(f"http://{test_web_address}/tenant_login")
+#     page.click("text=Tenant Username: Oli")
+
+#     h1_element = page.locator(".t-username")
+#     expect(h1_element).to_have_text("Welcome Oli")
