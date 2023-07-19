@@ -10,7 +10,7 @@ class BookingRepository:
         rows = self._connection.execute('SELECT * FROM bookings')
         bookings = []
         for row in rows:
-            booking = Booking(row['id'], row['space_id'], row['tenant_id'], row['landlord_id'], row['status'], row['date'].strftime("%Y-%m-%d"))
+            booking = Booking(row['id'], row['space_id'], row['tenant_id'], row['landlord_id'], row['status'], row['date'])
             bookings.append(booking)
         return bookings
 
