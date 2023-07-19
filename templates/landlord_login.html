@@ -10,6 +10,9 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <p>This is the homepage.</p>
+        <h1>Landlord Login</h1>
+        {% for landlord in landlords %}
+            <p>Landlord Username: {{landlord.username}}</p>
+        {% endfor %}
     </body>
 </html>
