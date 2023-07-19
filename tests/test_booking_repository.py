@@ -13,13 +13,13 @@ checks all bookings are now updated
 def test_create_booking(db_connection):
     db_connection.seed('seeds/airbnb_seeds.sql')
     booking_repo = BookingRepository(db_connection)
-    booking = Booking(None, 3, 3, 2, None, "2023-07-18")
+    booking = Booking(None, 3, "Space 3", 3, 2, None, "2023-07-18")
     booking_repo.create_booking(booking)
     all_bookings = booking_repo.all()
     assert all_bookings == [
-        Booking(id=1, space_id=1, tenant_id=1, landlord_id=1, status='pending', date="2023-07-18"),
-        Booking(id=2, space_id=1, tenant_id=1, landlord_id=1, status="approved", date="2023-07-17"),
-        Booking(id=3, space_id=3, tenant_id=3, landlord_id=2, status="pending", date="2023-07-18")
+        Booking(id=1, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status='pending', date="2023-07-18"),
+        Booking(id=2, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status="approved", date="2023-07-17"),
+        Booking(id=3, space_id=3, space_title="Space 3", tenant_id=3, landlord_id=2, status="pending", date="2023-07-18")
     ]
 
 """
@@ -34,8 +34,8 @@ def test_deny_booking(db_connection):
     booking_repo.update_booking(booking_id=1, approve_status=False)
     all_bookings = booking_repo.all()
     assert all_bookings == [
-        Booking(id=2, space_id=1, tenant_id=1, landlord_id=1, status="approved", date="2023-07-17"),
-        Booking(id=1, space_id=1, tenant_id=1, landlord_id=1, status='denied', date="2023-07-18")
+        Booking(id=2, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status="approved", date="2023-07-17"),
+        Booking(id=1, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status='denied', date="2023-07-18")
     ]
 
 """
@@ -48,14 +48,14 @@ deny booking - no changes to availability table
 def test_deny_booking_extra(db_connection):
     db_connection.seed('seeds/airbnb_seeds.sql')
     booking_repo = BookingRepository(db_connection)
-    booking = Booking(None, 3, 3, 2, None, "2023-07-18")
+    booking = Booking(None, 3, "Space 3", 3, 2, None, "2023-07-18")
     booking_repo.create_booking(booking)
     booking_repo.update_booking(booking_id=3, approve_status=False)
     all_bookings = booking_repo.all()
     assert all_bookings == [
-        Booking(id=1, space_id=1, tenant_id=1, landlord_id=1, status='pending', date="2023-07-18"),
-        Booking(id=2, space_id=1, tenant_id=1, landlord_id=1, status="approved", date="2023-07-17"),
-        Booking(id=3, space_id=3, tenant_id=3, landlord_id=2, status="denied", date="2023-07-18")
+        Booking(id=1, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status='pending', date="2023-07-18"),
+        Booking(id=2, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status="approved", date="2023-07-17"),
+        Booking(id=3, space_id=3, space_title="Space 3", tenant_id=3, landlord_id=2, status="denied", date="2023-07-18")
     ]
 
 """
@@ -65,7 +65,7 @@ def test_get_booking_by_id(db_connection):
     db_connection.seed('seeds/airbnb_seeds.sql')
     booking_repo = BookingRepository(db_connection)
     booking = booking_repo.get_booking_by_id(1)
-    assert booking == Booking(id=1, space_id=1, tenant_id=1, landlord_id=1, status='pending', date="2023-07-18")
+    assert booking == Booking(id=1, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status='pending', date="2023-07-18")
 
 """
 approve a booking
@@ -78,8 +78,8 @@ def test_approve_booking(db_connection):
     booking_repo.update_booking(booking_id=1, approve_status="approved")
     all_bookings = booking_repo.all()
     assert all_bookings == [
-        Booking(id=2, space_id=1, tenant_id=1, landlord_id=1, status="approved", date="2023-07-17"),
-        Booking(id=1, space_id=1, tenant_id=1, landlord_id=1, status='approved', date="2023-07-18")
+        Booking(id=2, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status="approved", date="2023-07-17"),
+        Booking(id=1, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status='approved', date="2023-07-18")
     ]
 
     availability_repo = AvailabilityRepository(db_connection)
@@ -102,9 +102,9 @@ Check pending
 def test_booking_by_status_landlord_id(db_connection):
     db_connection.seed('seeds/airbnb_seeds.sql')
     booking_repo = BookingRepository(db_connection)
-    booking = Booking(None, 3, 3, 2, None, "2023-07-18")
+    booking = Booking(None, 3, "Space 3", 3, 2, None, "2023-07-18")
     booking_repo.create_booking(booking)
     bookings = booking_repo.get_booking_by_status_and_landlord_id("pending", 2)
     assert bookings == [
-        Booking(id=3, space_id=3, tenant_id=3, landlord_id=2, status="pending", date="2023-07-18")
+        Booking(id=3, space_id=3, space_title="Space 3", tenant_id=3, landlord_id=2, status="pending", date="2023-07-18")
     ]
