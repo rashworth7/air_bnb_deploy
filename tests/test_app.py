@@ -37,13 +37,29 @@ def test_get_landlord_login(db_connection, page, test_web_address):
 """
 test Get /landlord_dashboard/id
 """
-# def test_get_landlord_dashboard_by_id(db_connection, page, test_web_address):
-#     db_connection.seed("./seeds/airbnb_seeds.sql")
-#     page.goto(f"http://{test_web_address}/landlord_login")
-#     page.click("text=Landlord Username: Charlotte")
+def test_get_landlord_dashboard_by_id(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/landlord_login")
+    page.click("text=Landlord Username: Charlotte")
 
-#     h1_element = page.locator("h1")
-#     expect(h1_element).to_have_text("Welcome Charlotte")
+    h1_element = page.locator("h1")
+    expect(h1_element).to_have_text("Welcome Charlotte")
+
+"""
+test GET landlord_listing/id
+"""
+def test_get_landlord_listing_by_id(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/landlord_dashboard/1")
+    page.click("text=My Spaces and requests")
+
+    h1_element = page.locator("h1")
+    expect(h1_element).to_have_text("Your listings, Charlotte")
+    
+    space_names = page.locator_all(".space_names")
+    
+
+
 
 """
 test GET /tenant_dashboard/id

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Landlord Listing</title>
+</head>
+<body>
+    <h1>Your listings, {{ landlord.username }}</h1>
+
+    <h2>Your Spaces:</h2>
+    <ul>
+        {% for space in spaces %}
+        <li class="space-name">{{ space.name }} - Price per night: ${{ space.price_per_night }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Booking Requests:</h2>
+    <ul>
+        {% for request in requests %}
+        <li class="booking-request">{{ request.space_title }} - Date: {{ request.date }} - Status: {{ request.status }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2><a href="/landlord_dashboard/{{landlord.id}}">Back to Dashboard</a></h2>
+</body>
+</html>

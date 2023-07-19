@@ -3,6 +3,8 @@ from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.landlord_repository import LandlordRepository
 from lib.tenant_repository import TenantRepository
+from lib.space_repository import SpaceRepository
+from lib.booking_repository import BookingRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -35,6 +37,19 @@ def get_landlord_dashboard(id):
     repository = LandlordRepository(connection)
     landlord = repository.get_landlord_by_id(id)
     return render_template('/landlord_dashboard.html', landlord=landlord)
+
+#GET /landlord_listing/id
+@app.route('/landlord_spaces_and_requests/<int:landlord_id>')
+def get_landlord_listing(landlord_id):
+    connection = get_flask_database_connection(app)
+    landlord_repo = LandlordRepository(connection)
+    space_repo = SpaceRepository(connection)
+    booking_repo = BookingRepository(connection)
+    landlord = landlord_repo.get_landlord_by_id(landlord_id)
+    landlord_spaces = space_repo.get_spaces_by_landlord_id(landlord_id)
+    landlord_requests = booking_repo.get_booking_by_status_and_landlord_id('pending', landlord_id)
+    return render_template('landlord_spaces_and_requests.html', landlord=landlord, spaces=landlord_spaces, requests=landlord_requests)
+
 
 #GET /tenant_login/id
 # tenant dashboard page

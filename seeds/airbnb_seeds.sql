@@ -4,22 +4,22 @@
 -- database state, and that tests don't interfere with each other.
 
 -- First, we must delete (drop) all our tables
-DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS bookings cascade;
 DROP SEQUENCE IF EXISTS bookings_id_seq;
 
 -- DROP TABLE IF EXISTS availability_of_spaces;
 -- DROP SEQUENCE IF EXISTS availability_of_spaces_id_seq;
 
-DROP TABLE IF EXISTS availability;
+DROP TABLE IF EXISTS availability cascade;
 DROP SEQUENCE IF EXISTS availability_id_seq;
 
-DROP TABLE IF EXISTS spaces;
+DROP TABLE IF EXISTS spaces cascade;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
 
-DROP TABLE IF EXISTS landlords;
+DROP TABLE IF EXISTS landlords cascade;
 DROP SEQUENCE IF EXISTS landlords_id_seq;
 
-DROP TABLE IF EXISTS tenants;
+DROP TABLE IF EXISTS tenants cascade;
 DROP SEQUENCE IF EXISTS tenants_id_seq;
 
 

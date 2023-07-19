@@ -12,7 +12,7 @@
     <body>
         <h1>Landlord Login</h1>
         {% for landlord in landlords %}
-            <p>Landlord Username: {{landlord.username}}</p>
+            <a href="/landlord_dashboard/{{landlord.id}}"><p>Landlord Username: {{landlord.username}}</p></a>
         {% endfor %}
     </body>
 </html>
