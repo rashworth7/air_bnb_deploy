@@ -48,7 +48,7 @@ removes from table
 def test_delete(db_connection):
     db_connection.seed('seeds/airbnb_seeds.sql')
     availability_repo = AvailabilityRepository(db_connection)
-    availability_repo.delete(4)
+    availability_repo.delete(2, '2023-07-21')
     availability_dates_spaces = availability_repo.all()
     assert availability_dates_spaces == [
         Availability(1, 1, '2023-07-18'),
