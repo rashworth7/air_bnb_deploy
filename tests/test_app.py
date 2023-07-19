@@ -10,10 +10,17 @@ def test_get_index(page, test_web_address):
     page.goto(f"http://{test_web_address}/index")
 
     # We look at the <p> tag
-    strong_tag = page.locator("p")
+    p_tag = page.locator("p")
+    div_tag = page.locator("div")
+    # landlord_anchor = page.locator("[id='landlord_login']")
+    landlord_anchor = page.locator('#landlord_login')
+    tenant_anchor = page.locator('#tenant_login')
 
     # We assert that it has the text "This is the homepage."
-    expect(strong_tag).to_have_text("This is the homepage.")
+    expect(p_tag).to_have_text(["This is the homepage.\n", 'Are you a?'])
+    expect(div_tag).to_have_text("\n Landlord\n Tenant")
+    expect(landlord_anchor).to_have_attribute("href", "/landlord_login")
+    expect(tenant_anchor).to_have_attribute("href", "/tenant_login")
 
 # testing for landlord login page
 def test_get_landlord_login(db_connection, page, test_web_address):
