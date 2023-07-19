@@ -27,6 +27,15 @@ def get_landlord_login():
     all_landlords = repository.list_landlords()
     return render_template('landlord_login.html', landlords = all_landlords)
 
+# GET /tenant_login
+# Returns the tenant login page
+@app.route('/tenant_login', methods=['GET'])
+def get_tenant_login():
+    connection = get_flask_database_connection(app)
+    repository = TenantRepository(connection)
+    all_tenants = repository.list_tenants()
+    return render_template('tenant_login.html', tenants = all_tenants)
+
 
 #GET /landlord_login/id
 # landlord dashboard page

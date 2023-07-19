@@ -33,6 +33,24 @@ def test_get_landlord_login(db_connection, page, test_web_address):
         'Landlord Username: Nebiat', 
         'Landlord Username: Rich'
     ])
+    # a_tag = page.locator("a")
+    # expect(a_tag).to_have_text([
+    #     ''
+    # ])
+
+# testing for tenant login page
+def test_get_tenant_login(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/tenant_login")
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text([
+        'Tenant Username: Charlotte', 
+        'Tenant Username: Oli', 
+        'Tenant Username: Nebiat', 
+        'Tenant Username: Rich'
+    ])
+
+
 
 """
 test Get /landlord_dashboard/id
