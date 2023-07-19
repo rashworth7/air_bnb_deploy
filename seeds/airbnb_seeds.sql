@@ -4,22 +4,22 @@
 -- database state, and that tests don't interfere with each other.
 
 -- First, we must delete (drop) all our tables
-DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS bookings cascade;
 DROP SEQUENCE IF EXISTS bookings_id_seq;
 
 -- DROP TABLE IF EXISTS availability_of_spaces;
 -- DROP SEQUENCE IF EXISTS availability_of_spaces_id_seq;
 
-DROP TABLE IF EXISTS availability;
+DROP TABLE IF EXISTS availability cascade;
 DROP SEQUENCE IF EXISTS availability_id_seq;
 
-DROP TABLE IF EXISTS spaces;
+DROP TABLE IF EXISTS spaces cascade;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
 
-DROP TABLE IF EXISTS landlords;
+DROP TABLE IF EXISTS landlords cascade;
 DROP SEQUENCE IF EXISTS landlords_id_seq;
 
-DROP TABLE IF EXISTS tenants;
+DROP TABLE IF EXISTS tenants cascade;
 DROP SEQUENCE IF EXISTS tenants_id_seq;
 
 
@@ -62,6 +62,7 @@ CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
     space_id INT,
+    space_title TEXT,
     tenant_id INT,
     landlord_id INT,
     date DATE,
@@ -108,8 +109,8 @@ VALUES
 ;
 
 INSERT INTO bookings 
-(space_id, tenant_id, landlord_id, date, status)
+(space_id, space_title, tenant_id, landlord_id, date, status)
 VALUES
-(1, 1, 1, '2023-07-18', 'pending'),
-(1, 1, 1, '2023-07-17', 'approved')
+(1, 'Space 1', 1, 1, '2023-07-18', 'pending'),
+(1, 'Space 1', 1, 1, '2023-07-17', 'approved')
 ;
