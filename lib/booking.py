@@ -13,5 +13,5 @@ class Booking:
         return self.__dict__ == other.__dict__
     
     def __repr__(self):
-        return f'Booking({self.id}, {self.space_id}, {self.tenant_id}, {self.landlord_id}, {self.status}, {self.date.strftime("%d/%m/%Y")})'
+        return f'Booking({self.id}, {self.space_id}, {self.tenant_id}, {self.landlord_id}, {self.status}, {self.date})'
     

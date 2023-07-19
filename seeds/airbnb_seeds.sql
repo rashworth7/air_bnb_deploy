@@ -7,8 +7,11 @@
 DROP TABLE IF EXISTS bookings;
 DROP SEQUENCE IF EXISTS bookings_id_seq;
 
-DROP TABLE IF EXISTS availability_of_spaces;
-DROP SEQUENCE IF EXISTS availability_of_spaces_id_seq;
+-- DROP TABLE IF EXISTS availability_of_spaces;
+-- DROP SEQUENCE IF EXISTS availability_of_spaces_id_seq;
+
+DROP TABLE IF EXISTS availability;
+DROP SEQUENCE IF EXISTS availability_id_seq;
 
 DROP TABLE IF EXISTS spaces;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
@@ -45,22 +48,23 @@ CREATE TABLE spaces (
     ON DELETE cascade
 );
 
-CREATE SEQUENCE IF NOT EXISTS availability_of_spaces_id_seq;
-CREATE TABLE availability_of_spaces (
+CREATE SEQUENCE IF NOT EXISTS availability_id_seq;
+CREATE TABLE availability (
     id SERIAL PRIMARY KEY,
     space_id INT,
-    date_available date,
+    date date,
     CONSTRAINT fk_space_id foreign key(space_id) 
     REFERENCES spaces(id)
+    ON DELETE cascade
 );
 
 CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
     space_id INT,
-    date DATE,
     tenant_id INT,
     landlord_id INT,
+    date DATE,
     status VARCHAR(255),
     CONSTRAINT fk_space_id foreign key(space_id) 
     REFERENCES spaces(id)
@@ -91,8 +95,8 @@ VALUES
 ('Space 3', 'Space 3 rubbish', 20, 2)
 ;
 
-INSERT INTO availability_of_spaces
-(space_id, date_available)
+INSERT INTO availability
+(space_id, date)
 VALUES
 (1, '2023-07-18'),
 (1, '2023-07-19'),
@@ -104,8 +108,8 @@ VALUES
 ;
 
 INSERT INTO bookings 
-(space_id, date, tenant_id, landlord_id, status)
+(space_id, tenant_id, landlord_id, date, status)
 VALUES
-(1, '2023-07-18', 1, 1, 'pending'),
-(1, '2023-07-17', 1, 1, 'approved')
+(1, 1, 1, '2023-07-18', 'pending'),
+(1, 1, 1, '2023-07-17', 'approved')
 ;
