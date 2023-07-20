@@ -1,3 +1,23 @@
 body {
     font-size: 18px;
+    border-style: solid;
+    border-color: #FF385C;
+    border-width: 5px;
+    padding: 20px;
+}
+
+div, p {
+    display: flex;
+}
+
+p {
+    justify-content: center;
+}
+
+div {
+    justify-content: space-around;
+}
+
+a:hover, a:visited {
+    color: #FF385C
 }
