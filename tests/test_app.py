@@ -1,5 +1,5 @@
 from playwright.sync_api import Page, expect
-
+from lib.booking_repository import BookingRepository
 # Tests for your routes go here
 
 """
@@ -54,13 +54,53 @@ def test_get_tenant_login(db_connection, page, test_web_address):
 """
 test Get /landlord_dashboard/id
 """
-# def test_get_landlord_dashboard_by_id(db_connection, page, test_web_address):
-#     db_connection.seed("./seeds/airbnb_seeds.sql")
-#     page.goto(f"http://{test_web_address}/landlord_login")
-#     page.click("text=Landlord Username: Charlotte")
+def test_get_landlord_dashboard_by_id(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/landlord_login")
+    page.click("text=Charlotte")
 
-#     h1_element = page.locator("h1")
-#     expect(h1_element).to_have_text("Welcome Charlotte")
+    h1_element = page.locator("h1")
+    expect(h1_element).to_have_text("Welcome Charlotte")
+
+"""
+test GET landlord_listing/id
+"""
+def test_get_landlord_listing_by_id(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/landlord_dashboard/1")
+    page.click("text=My Spaces and requests")
+
+    h1_element = page.locator("h1")
+    expect(h1_element).to_have_text("Your spaces, Charlotte")
+    
+    # space_names = page.inner_text(".space_name")
+    # for space_name in space_names:
+    #     expect(space_name).not_to_be_empty()
+
+def test_approve_changes_status_to_approved(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/landlord_listing/1")
+    booking_repo = BookingRepository(db_connection)
+    booking_id = 1
+    booking = booking_repo.get_booking_by_id(booking_id)
+    assert booking.status == "pending"
+
+    button = page.locator(".approve-button")
+    # button.click()
+
+    # assert booking.status == "approved"
+
+
+
+# def test_landlord_listing_navigation_back_to_dashboard(db_connection, page, test_web_address):
+#     db_connection.seed("./seeds/airbnb_seeds.sql")
+#     page.goto(f"http://{test_web_address}/landlord_listing/1")
+
+#     page.click("text=Back to dashboard")
+#     expect(page.url).to_be(f"http://{test_web_address}/landlord_dashboard/1")
+#     expect(page.inner_text("h1")).to_contain("Welcome Charlotte")
+
+
 
 """
 test GET /tenant_dashboard/id
