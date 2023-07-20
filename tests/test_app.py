@@ -33,10 +33,8 @@ def test_get_landlord_login(db_connection, page, test_web_address):
         'Landlord Username: Nebiat', 
         'Landlord Username: Rich'
     ])
-    # a_tag = page.locator("a")
-    # expect(a_tag).to_have_text([
-    #     ''
-    # ])
+    first_landlord_link = page.get_by_text('Charlotte')
+    expect(first_landlord_link).to_have_attribute('href', '/landlord_dashboard/1')
 
 # testing for tenant login page
 def test_get_tenant_login(db_connection, page, test_web_address):
@@ -50,8 +48,8 @@ def test_get_tenant_login(db_connection, page, test_web_address):
         'Tenant Username: Rich',
         'Back'
     ])
-
-
+    second_tenant_link = page.get_by_text('Oli')
+    expect(second_tenant_link).to_have_attribute('href', '/tenant_dashboard/2')
 
 """
 test Get /landlord_dashboard/id
