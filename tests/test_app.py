@@ -31,7 +31,8 @@ def test_get_landlord_login(db_connection, page, test_web_address):
         'Landlord Username: Charlotte', 
         'Landlord Username: Oli', 
         'Landlord Username: Nebiat', 
-        'Landlord Username: Rich'
+        'Landlord Username: Rich',
+        'Back'
     ])
     first_landlord_link = page.get_by_text('Charlotte')
     expect(first_landlord_link).to_have_attribute('href', '/landlord_dashboard/1')
@@ -86,22 +87,23 @@ def test_get_landlord_listing_by_id(db_connection, page, test_web_address):
 
 def test_approve_changes_status_to_approved(db_connection, page, test_web_address):
     db_connection.seed("./seeds/airbnb_seeds.sql")
-    page.goto(f"http://{test_web_address}/landlord_listing/1")
+    page.goto(f"http://{test_web_address}/landlord_spaces_and_requests/1")
     booking_repo = BookingRepository(db_connection)
     booking_id = 1
     booking = booking_repo.get_booking_by_id(booking_id)
     assert booking.status == "pending"
 
     button = page.locator(".approve-button")
-    # button.click()
+    button.click()
 
-    # assert booking.status == "approved"
+    booking = booking_repo.get_booking_by_id(booking_id)
+    assert booking.status == "approved"
 
 
 
 # def test_landlord_listing_navigation_back_to_dashboard(db_connection, page, test_web_address):
 #     db_connection.seed("./seeds/airbnb_seeds.sql")
-#     page.goto(f"http://{test_web_address}/landlord_listing/1")
+#     page.goto(f"http://{test_web_address}/landlord_spaces_and_requests/1")
 
 #     page.click("text=Back to dashboard")
 #     expect(page.url).to_be(f"http://{test_web_address}/landlord_dashboard/1")
@@ -177,10 +179,12 @@ def test_book_a_single_space_page(db_connection, page, test_web_address):
     page.click("text=Click here to book Space 1")
     expect(page).to_have_title("Space 1")
     h1_tag = page.locator("h1")
-    expect(h1_tag).to_have.text("Space 1")
+    expect(h1_tag).to_have_text("Space 1")
     p_tag = page.locator("p")
     expect(p_tag).to_have_text([
-        "Decription: Space 1 is very nice"
+        "Description:",
+        "Space 1 is very nice",
+        "Available Dates"
     ])
 
     
