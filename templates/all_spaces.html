@@ -10,7 +10,7 @@
     <div>
         <h3>{{space.title}}</h3>
         <p>Price per night: £{{space.price_per_night}}</p>
-        <p><a href="/tenant_dashboard/{{tenant.id}}/spaces/{{space.id}}">Click here to book!</a></p>
+        <p><a href="/tenant_dashboard/{{tenant.id}}/spaces/{{space.id}}">Click here to book {{space.title}}</a></p>
     </div>
     {% endfor %}
     <h2><a href="/tenant_dashboard/{{tenant.id}}">Back to dashboard</a></h2>
