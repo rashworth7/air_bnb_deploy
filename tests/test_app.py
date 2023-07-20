@@ -95,11 +95,11 @@ def test_get_all_spaces(db_connection, page, test_web_address):
         [
             "Find your dream stay",
             "Price per night: £50",
-            "Click here to book!",
+            "Click here to book Space 1",
             "Price per night: £60",
-            "Click here to book!",
+            "Click here to book Space 2",
             "Price per night: £20",
-            "Click here to book!"
+            "Click here to book Space 3"
         ]
     )
     h2_tag = page.locator("h2")
@@ -122,4 +122,22 @@ def test_back_to_dashbpard_on_all_spaces_page(db_connection, page, test_web_addr
     h2_tag = page.locator("h2")
     expect(h2_tag).to_have_text("Sign out")
 
+
+"""
+test book a space page
+"""
+def test_book_a_single_space_page(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/tenant_dashboard/2/spaces")
+    page.click("text=Click here to book Space 1")
+    expect(page).to_have_title("Space 1")
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have.text("Space 1")
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text([
+        "Decription: Space 1 is very nice"
+    ])
+
+    
+    
 

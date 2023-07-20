@@ -1,5 +1,8 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
+from lib.availability_repository import AvailabilityRepository
+from lib.booking_repository import BookingRepository
+from lib.booking import Booking
 from lib.database_connection import get_flask_database_connection
 from lib.landlord_repository import LandlordRepository
 from lib.space_repository import SpaceRepository
@@ -64,8 +67,38 @@ def get_all_spaces(tenant_id):
     spaces_repository = SpaceRepository(connection)
     tenant = tenant_repository.get_tenant_by_id(tenant_id)
     spaces = spaces_repository.all()
-    return render_template('/all_spaces.html', tenant=tenant, spaces=spaces)
+    return render_template('all_spaces.html', tenant=tenant, spaces=spaces)
 
+# GET //tenant_dashboard/{{tenant.id}}/spaces/{{space_id}}
+# Dsiplay page with option to book a space
+# Shows dates available
+
+@app.route('/tenant_dashboard/<int:tenant_id>/spaces/<int:space_id>')
+def get_single_space(tenant_id, space_id):
+    connection = get_flask_database_connection(app)
+    tenant_repository = TenantRepository(connection)
+    spaces_repository = SpaceRepository(connection)
+    availability_repository = AvailabilityRepository(connection)
+    tenant = tenant_repository.get_tenant_by_id(tenant_id)
+    space = spaces_repository.get_space_by_id(space_id)
+    availabilities = availability_repository.get_by_space_id(space_id)
+    return render_template('book_space.html', tenant=tenant, space=space, availabilities=availabilities)
+
+"""
+Clicking the book button on the space page
+refreshes the page removing the date
+updates the available dates table
+Adds a booking to booking table for review
+"""
+@app.route('/book/<space_id>/<space_title>/<landlord_id>/<tenant_id>/<date>', methods=['POST'])
+def post_book_space(space_id, space_title, landlord_id, tenant_id, date):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    booking = Booking(None, space_id, space_title, tenant_id, landlord_id, None, date)
+    booking_repository.create_booking(booking)
+    return redirect(request.referrer)
+    
+    
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

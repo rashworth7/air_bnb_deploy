@@ -108,3 +108,4 @@ def test_booking_by_status_landlord_id(db_connection):
     assert bookings == [
         Booking(id=3, space_id=3, space_title="Space 3", tenant_id=3, landlord_id=2, status="pending", date="2023-07-18")
     ]
+
