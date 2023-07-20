@@ -47,7 +47,8 @@ def test_get_tenant_login(db_connection, page, test_web_address):
         'Tenant Username: Charlotte', 
         'Tenant Username: Oli', 
         'Tenant Username: Nebiat', 
-        'Tenant Username: Rich'
+        'Tenant Username: Rich',
+        'Back'
     ])
 
 
@@ -66,13 +67,17 @@ test Get /landlord_dashboard/id
 """
 test GET /tenant_dashboard/id
 """
-# def test_get_tenant_dashboard_by_id(db_connection, page, test_web_address):
-#     db_connection.seed("./seeds/airbnb_seeds.sql")
-#     page.goto(f"http://{test_web_address}/tenant_login")
-#     page.click("text=Tenant Username: Oli")
+def test_get_tenant_dashboard_by_id(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/tenant_login")
+    page.click("text=Oli")
 
-#     h1_element = page.locator(".t-username")
-#     expect(h1_element).to_have_text("Welcome Oli")
+    h1_element = page.locator(".t-username")
+    expect(h1_element).to_have_text("Welcome Oli")
+    li_tag = page.locator('li')
+    expect(li_tag).to_have_text(["All spaces", "Requests"])
+    h2_tag = page.locator("h2")
+    expect(h2_tag).to_have_text("Sign out")
 
 
 """
@@ -98,18 +103,23 @@ def test_get_all_spaces(db_connection, page, test_web_address):
         ]
     )
     h2_tag = page.locator("h2")
-    expect(h2_tag).to_have_text("Sign out")
+    expect(h2_tag).to_have_text("Back to dashboard")
 
 """
 test get /tenant_dashboard/{{tenant.id}}/spaces
 click sign out, returns to tenant login page
 """
 
-def test_sign_out_on_all_spaces_page(db_connection, page, test_web_address):
+def test_back_to_dashbpard_on_all_spaces_page(db_connection, page, test_web_address):
     db_connection.seed("./seeds/airbnb_seeds.sql")
-    page.goto(f"http://{test_web_address}/tenant_dashboard/1/spaces")
-    page.click("text=Sign out")
+    page.goto(f"http://{test_web_address}/tenant_dashboard/2/spaces")
+    page.click("text=Back to dashboard")
 
-    # Add tests same as tenant login page
+    h1_element = page.locator(".t-username")
+    expect(h1_element).to_have_text("Welcome Oli")
+    li_tag = page.locator('li')
+    expect(li_tag).to_have_text(["All spaces", "Requests"])
+    h2_tag = page.locator("h2")
+    expect(h2_tag).to_have_text("Sign out")
 
 

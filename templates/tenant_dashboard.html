@@ -6,9 +6,9 @@
 <body>
     <h1 class="t-username">Welcome {{tenant.username}}</h1>
     <ul>
-        <li><a href=>All spaces</a></li>
-        <li><a href=>Request</a></li>
+        <li><a href="/tenant_dashboard/{{tenant.id}}/spaces">All spaces</a></li>
+        <li><a href=>Requests</a></li>
     </ul>
-    <h2><a href="tenant_login">Sign out</a></h2>
+    <h2><a href="/tenant_login">Sign out</a></h2>
 </body>
 </html>
