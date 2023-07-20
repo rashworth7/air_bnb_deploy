@@ -1,5 +1,5 @@
 from playwright.sync_api import Page, expect
-
+from lib.booking_repository import BookingRepository
 # Tests for your routes go here
 
 """
@@ -54,10 +54,31 @@ def test_get_landlord_listing_by_id(db_connection, page, test_web_address):
     page.click("text=My Spaces and requests")
 
     h1_element = page.locator("h1")
-    expect(h1_element).to_have_text("Your listings, Charlotte")
+    expect(h1_element).to_have_text("Your spaces, Charlotte")
     
-    space_names = page.locator_all(".space_names")
-    
+    space_names = page.locator_all(".space_name")
+    expect(len(space_names)).to_be(2)
+    expect("Space 1").in_(space_names[0].inner_text())
+    expect("Space 2").in_(space_names[1].inner_text())
+
+def test_approve_changes_status_to_approved(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/landlord_listing/1")
+
+    page.click("text=Approve")
+
+    approved_booking = BookingRepository.get_booking_by_id(1)
+    expect(approved_booking.status).to_equal('Approved')
+
+
+
+def test_landlord_listing_navigation_back_to_dashboard(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/landlord_listing/1")
+
+    page.click("text=Back to dashboard")
+    expect(page.url).to_be(f"http://{test_web_address}/landlord_dashboard/1")
+    expect(page.inner_text("h1")).to_contain("Welcome Charlotte")
 
 
 

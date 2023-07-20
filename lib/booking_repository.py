@@ -29,8 +29,10 @@ class BookingRepository:
         if not approve_status:
             self._connection.execute("UPDATE bookings SET status = 'denied' WHERE id = %s", [booking_id])
         else:
+            print('1************')
             self._connection.execute("UPDATE bookings SET status = 'approved' WHERE id = %s", [booking_id])
             booking = self.get_booking_by_id(booking_id)
+            print('2************')
             self._connection.execute("DELETE FROM availability WHERE space_id = %s AND date = %s", [booking.space_id, booking.date])
 
     def get_booking_by_status_and_landlord_id(self, status, landlord_id):
