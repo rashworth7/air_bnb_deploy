@@ -51,6 +51,13 @@ def test_get_tenant_login(db_connection, page, test_web_address):
     second_tenant_link = page.get_by_text('Oli')
     expect(second_tenant_link).to_have_attribute('href', '/tenant_dashboard/2')
 
+# test for create a space page
+def test_post_create_a_space(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/landlord_dashboard/1/create_a_space")
+    
+    
+
 """
 test Get /landlord_dashboard/id
 """
