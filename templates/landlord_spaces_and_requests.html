@@ -8,7 +8,7 @@
 
     <ul>
         {% for space in spaces %}
-        <li class="space-name">{{ space.name }} - Price per night: ${{ space.price_per_night }}</li>
+        <li class="space-name">{{ space.title }} - Price per night: ${{ space.price_per_night }}</li>
         {% endfor %}
     </ul>
 
@@ -17,10 +17,10 @@
         {% for request in requests %}
         <li class="booking-request">{{ request.space_title }} - Date: {{ request.date }} - Status: {{ request.status }}
             <form method="post" action="{{ url_for('approve_booking', booking_id=request.id) }}">
-                <button type="submit">Approve</button>
+                <button class="approve-button" type="submit">Approve</button>
             </form>
             <form method="post" action="{{ url_for('deny_booking', booking_id=request.id) }}">
-                <button type="submit">Deny</button>
+                <button class="deny-button" type="submit">Deny</button>
             </form>
         </li>
         {% endfor %}
