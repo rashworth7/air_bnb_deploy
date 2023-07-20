@@ -152,7 +152,7 @@ def post_create_a_space_success(landlord_id):
     a_space = Space(id, title, description, price_per_night, landlord_id)
     spaces_repository = SpaceRepository(connection)
     spaces_repository.create_space(a_space)
-    return redirect(f'/landlord_dashboard/{landlord_id}')
+    return redirect(f'/landlord_spaces_and_requests/{landlord_id}')
     
 # @app.route('/approve_booking/<int:booking_id>', methods=['POST'])
 # def approve_booking(booking_id):
