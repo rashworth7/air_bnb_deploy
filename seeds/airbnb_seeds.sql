@@ -62,6 +62,7 @@ CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
     space_id INT,
+    space_title TEXT,
     tenant_id INT,
     landlord_id INT,
     date DATE,
@@ -108,8 +109,8 @@ VALUES
 ;
 
 INSERT INTO bookings 
-(space_id, tenant_id, landlord_id, date, status)
+(space_id, space_title, tenant_id, landlord_id, date, status)
 VALUES
-(1, 1, 1, '2023-07-18', 'pending'),
-(1, 1, 1, '2023-07-17', 'approved')
+(1, 'Space 1', 1, 1, '2023-07-18', 'pending'),
+(1, 'Space 1', 1, 1, '2023-07-17', 'approved')
 ;

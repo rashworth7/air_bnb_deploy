@@ -10,17 +10,17 @@ class BookingRepository:
         rows = self._connection.execute('SELECT * FROM bookings')
         bookings = []
         for row in rows:
-            booking = Booking(row['id'], row['space_id'], row['tenant_id'], row['landlord_id'], row['status'], row['date'].strftime("%Y-%m-%d"))
+            booking = Booking(row['id'], row['space_id'], row['space_title'], row['tenant_id'], row['landlord_id'], row['status'], row['date'].strftime("%Y-%m-%d"))
             bookings.append(booking)
         return bookings
 
     def create_booking(self, booking):
-        self._connection.execute('INSERT INTO bookings (space_id, tenant_id, landlord_id, status, date) VALUES (%s, %s, %s, %s, %s)', [booking.space_id, booking.tenant_id, booking.landlord_id, "pending", booking.date])
+        self._connection.execute('INSERT INTO bookings (space_id, space_title, tenant_id, landlord_id, status, date) VALUES (%s, %s, %s, %s, %s, %s)', [booking.space_id, booking.space_title, booking.tenant_id, booking.landlord_id, "pending", booking.date])
 
     def get_booking_by_id(self, booking_id):
         rows = self._connection.execute('SELECT * FROM bookings WHERE id = %s', [booking_id])
         row = rows[0]
-        return Booking(row['id'], row['space_id'], row['tenant_id'], row['landlord_id'], row['status'], row['date'].strftime("%Y-%m-%d"))
+        return Booking(row['id'], row['space_id'], row['space_title'], row['tenant_id'], row['landlord_id'], row['status'], row['date'].strftime("%Y-%m-%d"))
         
 
     def update_booking(self, booking_id, approve_status):
@@ -39,7 +39,7 @@ class BookingRepository:
         rows = self._connection.execute('SELECT * FROM bookings WHERE status = %s AND landlord_id = %s', [status, landlord_id])
         bookings = []
         for row in rows:
-            booking = Booking(row['id'], row['space_id'], row['tenant_id'], row['landlord_id'], row['status'], row['date'].strftime("%Y-%m-%d"))
+            booking = Booking(row['id'], row['space_id'], row['space_title'], row['tenant_id'], row['landlord_id'], row['status'], row['date'].strftime("%Y-%m-%d"))
             bookings.append(booking)
         return bookings
 

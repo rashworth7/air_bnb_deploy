@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All spaces</title>
+</head>
+<body>
+    <h1 class="t-all-spaces">All spaces</h1>
+    <p>Find your dream stay</p>
+    {% for space in spaces %}
+    <div>
+        <h3>{{space.title}}</h3>
+        <p>Price per night: £{{space.price_per_night}}</p>
+        <p><a href="/tenant_dashboard/{{tenant.id}}/spaces/{{space.id}}">Click here to book!</a></p>
+    </div>
+    {% endfor %}
+    <h2><a href="/tenant_dashboard/{{tenant.id}}">Back to dashboard</a></h2>
+</body>
+</html>
