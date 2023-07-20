@@ -6,12 +6,13 @@ body {
     padding: 20px;
 }
 
-div, p {
+div, p, h1, h2 a {
     display: flex;
 }
 
-p {
+p, h1 {
     justify-content: center;
+    color: #2F4858;
 }
 
 div {
@@ -20,4 +21,9 @@ div {
 
 a:hover, a:visited {
     color: #FF385C
+}
+
+h2 a {
+    color: #37537C;
+    justify-content: center;
 }
