@@ -8,19 +8,20 @@
     <h1>{{space.title}}</h1>
         <p>Description:</p> <br>
         <p>{{space.description}}</p>
-    <div>
         <p>Available Dates</p>
         
+        
         {% for availability in availabilities %}
-       
-            {{availability.date}}
+        <div>
+            <p>{{availability.date}}</p>
             <form method="post" action="{{ url_for('post_book_space', space_id = availability.space_id, date = availability.date, tenant_id = tenant.id, space_title = space.title, landlord_id = space.landlord_id) }}">
-                <input type="submit" name="book" value="Book">
+                <p><input type="submit" name="book" id="{{availability.date}}" value="Book"></p>
             </form>
+        </div>
         {% endfor %}
         
         
-    </div>
+    
     <h2><a href="/tenant_dashboard/{{tenant.id}}">Back to dashboard</a></h2>
 
 </body>

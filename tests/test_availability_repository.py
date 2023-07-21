@@ -73,3 +73,15 @@ def test_get_by_space_id(db_connection):
         Availability(2, 1, '2023-07-19'),
         Availability(3, 1, '2023-07-20'),
     ]
+
+"""
+Test get space by id and tenant id
+"""
+
+def test_get_sapce_by_space_id_and_tennant_id(db_connection):
+    db_connection.seed("seeds/air_bnb_seeds_extra.sql")
+    availability_repo = AvailabilityRepository(db_connection)
+    availabilities = availability_repo.get_space_by_id_and_tenant_id(1, 1)
+    assert availabilities == [
+        Availability(2, 1, '2023-07-19')
+    ]
