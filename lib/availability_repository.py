@@ -14,7 +14,7 @@ class AvailabilityRepository:
         return availabilities
     
     def create(self, space_id, date):
-        self._connection.execute('INSERT INTO availability (space_id, date) VALUES (%s, %s)', [space_id, date])
+        self._connection.execute('INSERT INTO availability (space_id, date) SELECT %s, %s WHERE NOT EXISTS (SELECT (space_id, date) FROM availability WHERE space_id = %s AND date = %s)', [space_id, date, space_id, date])
 
     def delete(self, space_id, date):
         self._connection.execute('DELETE FROM availability WHERE space_id = %s AND date = %s', [space_id, date])
