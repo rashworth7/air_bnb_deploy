@@ -109,3 +109,15 @@ def test_booking_by_status_landlord_id(db_connection):
         Booking(id=3, space_id=3, space_title="Space 3", tenant_id=3, landlord_id=2, status="pending", date="2023-07-18")
     ]
 
+"""
+get booking by tenant id
+"""
+def test_get_booking_by_tenant_id(db_connection):
+    db_connection.seed('seeds/airbnb_seeds.sql')
+    booking_repo = BookingRepository(db_connection)
+    booking = booking_repo.get_booking_by_tenant_id(1)
+    assert booking == [
+        Booking(id=1, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status='pending', date="2023-07-18"),
+        Booking(id=2, space_id=1, space_title="Space 1", tenant_id=1, landlord_id=1, status='approved', date="2023-07-17")
+    ]
+
