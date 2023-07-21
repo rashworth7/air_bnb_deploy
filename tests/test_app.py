@@ -59,7 +59,7 @@ def test_post_create_a_space(db_connection, page, test_web_address):
     title = page.locator('h1')
     form = page.locator('#space_form > .component')
     expect(title).to_have_text('Create a space to list')
-    expect(form).to_have_count(5)
+    expect(form).to_have_count(4)
   
 """
 test Get /landlord_dashboard/id
