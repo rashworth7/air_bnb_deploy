@@ -112,7 +112,7 @@ def get_single_space(tenant_id, space_id):
     availability_repository = AvailabilityRepository(connection)
     tenant = tenant_repository.get_tenant_by_id(tenant_id)
     space = spaces_repository.get_space_by_id(space_id)
-    availabilities = availability_repository.get_by_space_id(space_id)
+    availabilities = availability_repository.get_space_by_id_and_tenant_id(space_id, tenant_id)
     return render_template('book_space.html', tenant=tenant, space=space, availabilities=availabilities)
 
 """

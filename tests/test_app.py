@@ -186,9 +186,49 @@ def test_book_a_single_space_page(db_connection, page, test_web_address):
     expect(p_tag).to_have_text([
         "Description:",
         "Space 1 is very nice",
-        "Available Dates"
+        "Available Dates",
+        "2023-07-18",
+        "Book",
+        "2023-07-19",
+        "Book",
+        "2023-07-20",
+        "Book"
+
     ])
 
     
+"""
+test book a space page with extra seed file
+If date is booked then that date will disappear
+"""
+def test_book_a_single_space_page_extra(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/air_bnb_seeds_extra.sql")
+    page.goto(f"http://{test_web_address}/tenant_dashboard/2/spaces")
+    page.click("text=Click here to book Space 1")
+    expect(page).to_have_title("Space 1")
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("Space 1")
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text([
+        "Description:",
+        "Space 1 is very nice",
+        "Available Dates",
+        "2023-07-19",
+        "Book",
+        "2023-07-20",
+        "Book"
+    ])
     
+    page.click("[id='2023-07-20']")
+
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text([
+        "Description:",
+        "Space 1 is very nice",
+        "Available Dates",
+        "2023-07-19",
+        "Book"
+    ])
+
+
 

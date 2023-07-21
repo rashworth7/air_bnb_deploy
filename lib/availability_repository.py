@@ -27,3 +27,21 @@ class AvailabilityRepository:
             availabilities.append(availability)
         return availabilities
 
+
+    def get_space_by_id_and_tenant_id(self, space_id, tenant_id):
+        rows = self._connection.execute('SELECT * FROM availability WHERE space_id = %s', [space_id])
+        availabilities = []
+        for row in rows:
+            availability = Availability(row['id'], row['space_id'], row['date'].strftime("%Y-%m-%d"))
+            availabilities.append(availability)
+
+        # pending availabilities
+        rows = self._connection.execute('SELECT availability.id, availability.space_id, availability.date FROM availability JOIN spaces on availability.space_id = spaces.id JOIN bookings on bookings.date = availability.date WHERE tenant_id = %s AND spaces.id = %s;', [tenant_id, space_id])
+        pending_availabilities = []
+        for row in rows:
+            availability = Availability(row['id'], row['space_id'], row['date'].strftime("%Y-%m-%d"))
+            pending_availabilities.append(availability)
+
+        tenant_availabilities = [x for x in availabilities if x not in pending_availabilities]
+
+        return tenant_availabilities
