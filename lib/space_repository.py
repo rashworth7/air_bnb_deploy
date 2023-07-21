@@ -28,3 +28,4 @@ class SpaceRepository:
     def create_space(self, space):
         id = self._connection.execute('INSERT INTO spaces (title, description, price_per_night, landlord_id) VALUES (%s, %s, %s, %s) RETURNING id', [space.title, space.description, space.price_per_night, space.landlord_id])
         return id[0]['id']
+

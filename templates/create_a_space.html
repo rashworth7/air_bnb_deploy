@@ -6,15 +6,18 @@
     </head>
     <body>
         <h1>Create a space to list</h1>
-        <form action="/create_space/{{landlord.id}}" method="post">
-            <input type="text" placeholder="title" name="title"><br>
-            <input type="text" placeholder="description" name="description"><br>
-            <input type="text" placeholder="price per night" name="price per night"><br>
+
+
+        <form id='space_form' name='space_form' action="/create_space/{{landlord.id}}" method="post">
+            <input class='component' for='space_form' type="text" placeholder="title" name="title">
+            <input class='component' for='space_form' type="text" placeholder="description" name="description">
+            <input class='component' for='space_form' type="text" placeholder="price per night" name="price per night">
             <label for="start date">Start date</label><br>
             <input type="date" placeholder="YYYY-MM-DD" name="start date" id="start date"><br>
             <label for="end date">End date</label><br>
             <input type="date" placeholder="YYYY-MM-DD" name="end date" id="end date"><br>
-            <button type="submit" name="submit">Create Space</button><br>
+            <button class='component' for='space_form' type="submit" name="submit">Create Space</button>
+
         </form>
         <h2><a href="/landlord_dashboard/{{landlord.id}}">Back to dashboard</a></h2>
     </body>
