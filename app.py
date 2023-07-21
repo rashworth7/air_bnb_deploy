@@ -154,17 +154,6 @@ def post_create_a_space(landlord_id):
     spaces_repository.create_space(a_space)
     return redirect(f'/landlord_spaces_and_requests/{landlord_id}')
     
-# @app.route('/approve_booking/<int:booking_id>', methods=['POST'])
-# def approve_booking(booking_id):
-#     connection = get_flask_database_connection(app)
-#     booking_repo = BookingRepository(connection)
-#     booking_repo.update_booking(booking_id, approve_status=True)
-#     return redirect(request.referrer)
-# <form method="post" action="{{ url_for('approve_booking', booking_id=request.id) }}">
-#                 <button type="submit">Approve</button>
-#             </form>
-
-
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
