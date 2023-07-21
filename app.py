@@ -1,4 +1,5 @@
 import os
+from datetime import date, datetime, timedelta
 from flask import Flask, request, render_template, redirect
 from lib.availability_repository import AvailabilityRepository
 from lib.booking import Booking
@@ -8,6 +9,7 @@ from lib.space_repository import SpaceRepository
 from lib.tenant_repository import TenantRepository
 from lib.space import Space
 from lib.booking_repository import BookingRepository
+import pandas
 
 
 # Create a new Flask app
@@ -147,11 +149,27 @@ def post_create_a_space(landlord_id):
     title = request.form['title']
     description = request.form['description']
     price_per_night = request.form['price per night']
+    start_date = datetime.strptime(request.form['start date'],"%Y-%m-%d")
+    end_date = datetime.strptime(request.form['end date'], "%Y-%m-%d")
     connection = get_flask_database_connection(app)
-    # use input from form to pass in to Space()
     a_space = Space(None, title, description, price_per_night, landlord_id)
     spaces_repository = SpaceRepository(connection)
-    spaces_repository.create_space(a_space)
+    space_id = spaces_repository.create_space(a_space)
+    
+
+    availability_repo = AvailabilityRepository(connection)
+
+    dates = pandas.date_range(start_date,end_date-timedelta(days=1),freq='d')
+    print(dates)
+
+    for date in dates:
+        availability_repo.create(space_id, date.strftime("%Y-%m-%d"))
+        print("*************************************")
+        print(f"Creating space with date {date.strftime('%Y-%m-%d')}")
+
+    
+    # use input from form to pass in to Space()
+   
     return redirect(f'/landlord_spaces_and_requests/{landlord_id}')
     
 
