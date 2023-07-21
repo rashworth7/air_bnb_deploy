@@ -17,7 +17,7 @@ def test_get_index(page, test_web_address):
     tenant_anchor = page.locator('#tenant_login')
 
     # We assert that it has the text "This is the homepage."
-    expect(p_tag).to_have_text(["This is the homepage.\n", 'Are you a?'])
+    expect(p_tag).to_have_text(["Welcome to CORN BNB\n", 'Are you a?'])
     expect(div_tag).to_have_text("\n Landlord\n Tenant")
     expect(landlord_anchor).to_have_attribute("href", "/landlord_login")
     expect(tenant_anchor).to_have_attribute("href", "/tenant_login")
@@ -79,7 +79,7 @@ def test_get_landlord_listing_by_id(db_connection, page, test_web_address):
     page.click("text=My Spaces and requests")
 
     h1_element = page.locator("h1")
-    expect(h1_element).to_have_text("Your spaces, Charlotte")
+    expect(h1_element).to_have_text("Your spaces and requests, Charlotte")
     
     # space_names = page.inner_text(".space_name")
     # for space_name in space_names:
@@ -101,13 +101,15 @@ def test_approve_changes_status_to_approved(db_connection, page, test_web_addres
 
 
 
-# def test_landlord_listing_navigation_back_to_dashboard(db_connection, page, test_web_address):
-#     db_connection.seed("./seeds/airbnb_seeds.sql")
-#     page.goto(f"http://{test_web_address}/landlord_spaces_and_requests/1")
+def test_landlord_listing_navigation_back_to_dashboard(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/airbnb_seeds.sql")
+    page.goto(f"http://{test_web_address}/landlord_spaces_and_requests/1")
 
-#     page.click("text=Back to dashboard")
-#     expect(page.url).to_be(f"http://{test_web_address}/landlord_dashboard/1")
-#     expect(page.inner_text("h1")).to_contain("Welcome Charlotte")
+    anchor_tag = page.locator(".back-button")
+    expect(anchor_tag).to_have_attribute("href", "/landlord_dashboard/1")
+    # page.click("text=Back to dashboard")
+    
+    # expect(page.url).eq(f"http://{test_web_address}/landlord_dashboard/1")
 
 
 
