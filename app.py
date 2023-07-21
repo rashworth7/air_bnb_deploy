@@ -157,11 +157,14 @@ def post_create_a_space(landlord_id):
     title = request.form['title']
     description = request.form['description']
     price_per_night = request.form['price per night']
+    availability_date = request.form['available dates']
     connection = get_flask_database_connection(app)
     # use input from form to pass in to Space()
     a_space = Space(None, title, description, price_per_night, landlord_id)
     spaces_repository = SpaceRepository(connection)
-    spaces_repository.create_space(a_space)
+    space_id = spaces_repository.create_space(a_space)
+    availability_repo = AvailabilityRepository(connection)
+    availability_repo.create(space_id, availability_date)
     return redirect(f'/landlord_spaces_and_requests/{landlord_id}')
     
 

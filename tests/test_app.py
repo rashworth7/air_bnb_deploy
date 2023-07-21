@@ -56,9 +56,11 @@ def test_get_tenant_login(db_connection, page, test_web_address):
 def test_post_create_a_space(db_connection, page, test_web_address):
     db_connection.seed("./seeds/airbnb_seeds.sql")
     page.goto(f"http://{test_web_address}/landlord_dashboard/1/create_a_space")
-    
-    
-
+    title = page.locator('h1')
+    form = page.locator('#space_form > .component')
+    expect(title).to_have_text('Create a space to list')
+    expect(form).to_have_count(5)
+  
 """
 test Get /landlord_dashboard/id
 """
