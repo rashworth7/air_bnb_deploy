@@ -161,7 +161,6 @@ def post_create_a_space(landlord_id):
     price_per_night = request.form['price per night']
     start_date = datetime.strptime(request.form['start date'],"%Y-%m-%d")
     end_date = datetime.strptime(request.form['end date'], "%Y-%m-%d")
-    availability_date = request.form['available dates']
     connection = get_flask_database_connection(app)
     a_space = Space(None, title, description, price_per_night, landlord_id)
     spaces_repository = SpaceRepository(connection)
