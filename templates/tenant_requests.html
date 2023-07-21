@@ -5,14 +5,14 @@
     <link rel="stylesheet" href="/static/style.css" >
 </head>
 <body>
-    <h1 class="t-my-requests">My requests</h1>
-    {% for booking in bookings %}
+    <h1 class="t-my-requests">Your requests, {{tenant.username}}</h1>
         <ul>
-            <li class="request">
-                {{ booking.space_title }} - Date: {{ booking.date }} - Status: {{ booking.status }}
-            </li>
+            {% for booking in bookings %}
+            <p class="request">
+            {{ booking.space_title }} - Date: {{ booking.date }} - Status: {{ booking.status }}
+            </p>
+            {% endfor %}
         </ul>
-    {% endfor %}
     <h2><a href="/tenant_dashboard/{{tenant.id}}">Back to dashboard</a></h2>
 </body>
 </html>

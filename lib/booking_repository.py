@@ -49,4 +49,4 @@ class BookingRepository:
             bookings.append(booking)
         return bookings
 
-     
+
