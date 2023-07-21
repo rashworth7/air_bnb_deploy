@@ -230,5 +230,26 @@ def test_book_a_single_space_page_extra(db_connection, page, test_web_address):
         "Book"
     ])
 
+"""
+test get bookings by tenant id
+"""
+
+def test_get_tenant_(db_connection, page, test_web_address):
+    db_connection.seed("./seeds/air_bnb_seeds_extra.sql")
+    page.goto(f"http://{test_web_address}/tenant_dashboard/1/requests")
+    expect(page).to_have_title("Tenant requests")
+    my_requests_tag = page.locator(".t-my-requests")
+    expect(my_requests_tag).to_have_text("Your requests, Charlotte")
+    request_tag = page.locator(".request")
+    expect(request_tag).to_have_text(
+        [
+        "Space 1 - Date: 2023-07-18 - Status: pending",
+        "Space 1 - Date: 2023-07-20 - Status: pending",
+        "Space 1 - Date: 2023-07-17 - Status: approved"
+        ]
+    )
+    h2_tag = page.locator("h2")
+    expect(h2_tag).to_have_text("Back to dashboard")
+
 
 

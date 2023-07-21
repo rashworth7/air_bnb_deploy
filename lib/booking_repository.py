@@ -41,5 +41,12 @@ class BookingRepository:
             bookings.append(booking)
         return bookings
 
+    def get_booking_by_tenant_id(self, tenant_id):
+        rows = self._connection.execute('SELECT * FROM bookings WHERE tenant_id = %s', [tenant_id])
+        bookings = []
+        for row in rows:
+            booking = Booking(row['id'], row['space_id'], row['space_title'], row['tenant_id'], row['landlord_id'], row['status'], row['date'].strftime("%Y-%m-%d"))
+            bookings.append(booking)
+        return bookings
 
-     
+

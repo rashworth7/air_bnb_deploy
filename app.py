@@ -129,7 +129,17 @@ def post_book_space(space_id, space_title, landlord_id, tenant_id, date):
     booking_repository.create_booking(booking)
     return redirect(request.referrer)
     
-    
+# GET /tenant_dashboard/{{tenant.id}}/requests
+# all requests on tenant route
+@app.route('/tenant_dashboard/<int:tenant_id>/requests')
+def get_tenant_requests(tenant_id):
+    connection = get_flask_database_connection(app)
+    tenant_repo = TenantRepository(connection)
+    tenant = tenant_repo.get_tenant_by_id(tenant_id)
+    booking_repo = BookingRepository(connection)
+    tenant_bookings = booking_repo.get_booking_by_tenant_id(tenant_id)
+    return render_template('tenant_requests.html', tenant=tenant, bookings=tenant_bookings)
+
 
 # GET /landlord_dashboard/{{landlord.id}}/create_a_space
 # render the create space form
